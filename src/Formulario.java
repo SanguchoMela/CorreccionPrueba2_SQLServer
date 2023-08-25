@@ -24,10 +24,10 @@ public class Formulario {
     private JButton ingresarElPresenteRegistroButton;
     private JButton limpiarFormularioButton;
 
-    //conexion con MySQL
-    final static String DB_URL="jdbc:mysql://localhost/registropersonas"; //cadena de conexion
-    final static String USER="root"; //usuario
-    final static String PASS="melA01.2"; //password
+    //conexion con SQL Server
+    final static String DB_URL="jdbc:sqlserver://localhost:1433;database=registropersonas;encrypt=true;trustServerCertificate=true;"; //cadena de conexion
+    final static String USER="prueba"; //usuario
+    final static String PASS="prueba"; //password
 
     //objeto para la clase Persona
     Persona persona = new Persona();
@@ -37,9 +37,9 @@ public class Formulario {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (codigo_in.getText().isEmpty()) {
-                    JOptionPane.showMessageDialog(null,"Llena el campo para iniciar la búsqueda!","Error",JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog( null,"Llena el campo para iniciar la búsqueda!","Error",JOptionPane.ERROR_MESSAGE);
                 } else {
-                    String QUERY = "SELECT * from personas where codigo_pers='"+codigo_in.getText()+"'";
+                    String QUERY = "SELECT * from PERSONAS where codigo_pers='"+codigo_in.getText()+"'";
                     buscarPersona(QUERY);
                 }
             }
@@ -50,7 +50,7 @@ public class Formulario {
                 if(nombre_in.getText().isEmpty()){
                     JOptionPane.showMessageDialog(null,"Llena el campo para iniciar la búsqueda!","Error",JOptionPane.ERROR_MESSAGE);
                 } else{
-                    String QUERY = "SELECT * from personas where nombre_pers='"+nombre_in.getText()+"'";
+                    String QUERY = "SELECT * from PERSONAS where nombre_pers='"+nombre_in.getText()+"'";
                     buscarPersona(QUERY);
                 }
             }
@@ -58,14 +58,14 @@ public class Formulario {
         buscarPorSignoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String QUERY = "SELECT * from personas where signoZod_pers='"+signo_select.getSelectedItem()+"'";
+                String QUERY = "SELECT * from PERSONAS where signoZod_pers='"+signo_select.getSelectedItem()+"'";
                 buscarPersona(QUERY);
             }
         });
         borrarElPresenteRegistroButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String deleteQuery = "DELETE FROM personas WHERE codigo_pers="+codigo_in.getText();
+                String deleteQuery = "DELETE FROM PERSONAS WHERE codigo_pers="+codigo_in.getText();
                 modificarRegistro(deleteQuery);
                 JOptionPane.showMessageDialog(null,"Registro borrado exitosamente","Borrado Correcto",JOptionPane.INFORMATION_MESSAGE);
             }
@@ -77,7 +77,7 @@ public class Formulario {
                 String fechaNac = fechaNac_in.getText();
                 String signoZod = String.valueOf(signo_select.getSelectedItem());
 
-                String updateQuery = "UPDATE personas SET nombre_pers='"+nombre+"',fechaNac_pers='"+fechaNac+"',signoZod_pers='"+signoZod+"'WHERE codigo_pers='"+codigo_in.getText()+"'";
+                String updateQuery = "UPDATE PERSONAS SET nombre_pers='"+nombre+"',fechaNac_pers='"+fechaNac+"',signoZod_pers='"+signoZod+"'WHERE codigo_pers='"+codigo_in.getText()+"'";
 
                 modificarRegistro(updateQuery);
 
@@ -162,7 +162,7 @@ public class Formulario {
 
     //Metodo para insertar registro
     private void insertPersona(Persona persona){
-        String insertQuery = "INSERT INTO personas VALUES ('"+persona.getCodigo()+"','"+persona.getCedula()+"','"+persona.getNombre()+"','"+persona.getFechaNac()+"','"+persona.getSignoZod()+"')";
+        String insertQuery = "INSERT INTO PERSONAS VALUES ('"+persona.getCodigo()+"','"+persona.getCedula()+"','"+persona.getNombre()+"','"+persona.getFechaNac()+"','"+persona.getSignoZod()+"')";
         modificarRegistro(insertQuery);
     }
 
